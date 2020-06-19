@@ -1,21 +1,25 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait 
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
 
-
-# Read data from excel file (saved with extension ".csv")
-
-
-
-driver=webdriver.Chrome("C:/Users/Admin/Desktop/chromedriver.exe")   # Selenium chromedriver path
+# Replace below path with the absolute path
+# to chromedriver in your computer
+driver = webdriver.Chrome('C:/Users/Admin/Desktop/chromedriver.exe')
 driver.get("https://web.whatsapp.com/")
+wait = WebDriverWait(driver, 600)
 
-#input("Enter any keyword after scanning QR code.\n ")
-name = '"Avantika"'
+# Replace 'Friend's Name' with the name of your friend
+# or the name of a group
+target = '"*********"'
+# Replace the below string with your own message \n",
+string = "You're Hacked!! Go Sleeep!!!"
+x_arg = '//span[contains(@title,' + target + ')]'
+group_title = wait.until(EC.presence_of_element_located((By.XPATH, x_arg)))
+group_title.click()
 
-user = driver.find_element_by_xpath("//span[@title='{}']".format(name))
-user.click()
-
-text_box = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
-text_box.send_keys("You're Fucked up!!")
-
-button = driver.find_element_by_class_name("_29RFr")
-button.click()
+input_box = driver.find_elements_by_xpath('//*[@id=\"main\"]/footer/div[1]/div[2]/div/div[2]')[0]
+for i in range(50):
+    input_box.send_keys(string + Keys.ENTER)
